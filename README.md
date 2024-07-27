@@ -16,20 +16,6 @@ This AppleScript allows you to seamlessly switch between Obsidian and NotePlan b
 
 Your Obsidian Vault has to be set to Your Noteplan directory, i.e. the one containing the `Calendar` and `Notes` directories. Without this setup, this script will not work. For more information about running NotePlan and Obsidian in parallel, see: https://help.noteplan.co/article/61-use-noteplan-with-obsidian)
 
-## Installation
-
-1. **Download the Script:**
-   - Download the `Obsidian_NotePlan_Switcher.applescript` file from this repository.
-
-2. **Save the Script:**
-   - Save the script in a convenient location on your Mac.
-
-3. **Grant Accessibility Permissions:**
-   - Go to `System Preferences` > `Security & Privacy` > `Privacy` tab.
-   - Select `Accessibility` from the left pane.
-   - Click the lock to make changes and enter your password.
-   - Add `Script Editor` (or the application you will use to run the script) to the list by clicking the `+` button and selecting the application.
-
 ## Testing the Script
 
 1. **Access the script [here](https://github.com/tophee/Note-Editor-Switcher/blob/main/Toggle-Note-Editor.scpt)**
