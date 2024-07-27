@@ -40,10 +40,9 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 
 3. **Set the Action:**
    - In the action configuration, choose `Run Apple Script (blocking)` (or `Run Apple Script (in background)` if you prefer).
-   - Paste the content of https://github.com/tophee/Note-Editor-Switcher/blob/main/Toggle-Note-Editor.scpt into the script editor.
+   - Paste the content of Toggle-Note-Editor.scpt into the script editor.
 
-4. **Save the Configuration:**
-   - Save the configuration and test the shortcut to ensure it triggers the script correctly.
+4. **Save the Configuration**
 
 ## Customization
 
