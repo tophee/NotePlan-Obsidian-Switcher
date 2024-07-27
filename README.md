@@ -51,8 +51,8 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 
 ## Troubleshooting
 
-- Ensure both Obsidian and NotePlan are installed and accessible.
-- Verify that the applications have the necessary permissions in the Accessibility section of System Preferences.
+- Ensure that the path to your Obsidian Vault and your Noteplan folder are identical and that the vault name is set correctly in the script. 
+- When you run the script for the first time, BTT will ask for permission to control Obsidian and Noteplan. Make sure to grant those persmissions. 
 - Adjust delay values in the script if it is not performing as expected under different system loads.
 
 ## Contributing
