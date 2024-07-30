@@ -7,44 +7,39 @@ end tell
 set vault to "co.noteplan.NotePlan-setapp"
 
 if frontApp is "Obsidian" then
-	-- Ensure Obsidian is frontmost
+	-- send Ctrl + Shift + Option + Cmd + U
 	tell application "System Events"
-		set frontmost of process frontApp to true
-		repeat until frontmost of process frontApp
-			delay 0.1
-		end repeat
-		if true is in value of attribute "AXFullScreen" of windows of process frontApp then
-			-- Exit full screen mode
-			key code 3 using {control down, command down}
-			delay 1
-		end if
-	end tell
-	
-	-- Get the title of the front window in Obsidian
-	tell application "System Events"
-		tell process "Obsidian" to set windowTitle to title of front window
-	end tell
-	
-	-- Filter out the vault name and Obsidian version from the window title
-	set AppleScript's text item delimiters to " - " & vault
-	set titleParts to text items of windowTitle
-	if (count of titleParts) > 0 then
-		set noteTitle to item 1 of titleParts
+        	key code 32 using {control down, shift down, option down, command down}
+    	end tell
+
+	-- Wait for a short moment to ensure clipboard is updated
+	delay 0.1
+
+	-- Get the clipboard content
+	set ObsidianURL to the clipboard as text
+
+	-- Extract the part after &file=
+	set AppleScript's text item delimiters to "&file="
+	set urlComponents to text items of ObsidianURL
+	if (count of urlComponents) > 1 then
+    		set filePath to item 2 of urlComponents
 	else
-		display dialog "Unable to parse the window title from Obsidian." buttons {"OK"} default button "OK"
-		return
+    		display dialog "Invalid URL format."
+    		return
 	end if
+
+	-- Remove prefix if it starts with Notes%2F or Calendar%2F
+	if filePath starts with "Notes%2F" then
+    		set filePath to text 9 thru -1 of filePath
+	else if filePath starts with "Calendar%2F" then
+    		set filePath to text 12 thru -1 of filePath
+	end if
+
+	-- Add .md to the end
+	set processedFilePath to filePath & ".md"
 	
-	-- Encode the window title for the URL
-	try
-		set encodedTitle to do shell script "python3 -c \"import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]))\" " & quoted form of noteTitle
-	on error errMsg
-		display dialog "Error encoding note title: " & errMsg buttons {"OK"} default button "OK"
-		return
-	end try
-	
-	-- Construct the NotePlan URL with the encoded note title
-	set notePlanURL to "noteplan://x-callback-url/openNote?noteTitle=" & encodedTitle
+	-- Construct the NotePlan URL with the processed file path
+	set notePlanURL to "noteplan://x-callback-url/openNote?filename=" & processedFilePath
 	
 	-- Open the file in NotePlan
 	try
