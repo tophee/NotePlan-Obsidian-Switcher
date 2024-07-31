@@ -4,18 +4,19 @@ This AppleScript allows you to seamlessly switch between Obsidian and NotePlan b
 ## Features
 
 - Detects whether Obsidian or NotePlan is the active application. (If neither app is active, the script does nothing.)´
-- Retrieves the title of the current note in Obsidian and opens it in NotePlan. (Credit to [Alex](https://alexwlchan.net/2023/obsidian-open-note/) for this workaround) 
-- Retrieves the URL of the current note in NotePlan and opens it in Obsidian.
-- If Obsidian is in full-screen mode, the script will exit full-screen before retrieving the title. (This is necessary because I wasn't able to get the Obsidian window title in full-screen mode.)
+- Retrieves the URL of the current note and opens it in the other app respectively.
+   - In Noteplan, the URL is retrieved via AppleScript.
+   - Obsidian doesn't support AppleScript, so we use a Hotkey to copy the URL.
 
 ## Requirements
 
-- Obsidian
-- NotePlan
-- BetterTouchTool (or some other way of triggering the script)
-- maybe, but apparently not: [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) (see [Update](README.md#update) under Troubleshooting below)
+- **Obsidian**
+   - with the Hotkey for "Copy Obsidian URL" set to Hyper + U, i.e. Cmd + Option + Ctrl + Shift + U. If you use a different hotkey, you need to change the script accordingly). ![CleanShot 2024-07-31 at 02 11 40@2x](https://github.com/user-attachments/assets/0a78feda-e64c-4d13-9f09-4329a050a8ff)
 
-Your Obsidian Vault has to be set to Your Noteplan directory, i.e. the one containing the `Calendar` and `Notes` directories. Without this setup, this script will not work. For more information about running NotePlan and Obsidian in parallel, see: https://help.noteplan.co/article/61-use-noteplan-with-obsidian)
+   - Your Obsidian Vault has to be set to your Noteplan directory, i.e. the one containing the `Calendar` and `Notes` directories. If you have your Obsidian Vault set to the `Notes` folder, you may need to adjust the script to get the paths right. If your Obsidian Vault is not insde the Noteplan folder at all, this script will not work. For more information about running NotePlan and Obsidian in parallel, see: https://help.noteplan.co/article/61-use-noteplan-with-obsidian)
+- **NotePlan**
+  - No specific preparations needed (assuming that you already have a aorking setup with Obsidian and Noteplan sharing the same notes).
+- **BetterTouchTool** (or some other way of triggering the script)
 
 ## Testing the Script
 
@@ -27,7 +28,7 @@ Your Obsidian Vault has to be set to Your Noteplan directory, i.e. the one conta
    - Set `vault` to the name of your bbsidian Vault (replace "co.noteplan.NotePlan-setapp")
    - Run the script 
 
-## Triggering the Script
+## Triggering the Script in Everyday Use
 
 There are many ways to trigger the script. Here is one example using BetterTouchTool:
 
@@ -48,7 +49,8 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 ## Customization
 
 - **Vault Name:**
-  - The script uses a hardcoded vault name `"co.noteplan.NotePlan-setapp"`. You can customize this by changing the `vault` variable in the script to match your vault name.
+  - The script uses a hardcoded vault name `co.noteplan.NotePlan-setapp`. You can customize this by changing the `vault` variable in the script to match your vault name.
+  - The script assumes that Hyper + U is the Hotkey in Obsidian for copying the note URL. If you have a different Hotkey, change the script accordingly.
 
 ## Troubleshooting
 
@@ -56,10 +58,12 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 - When you run the script for the first time, BTT will ask for permission to control Obsidian and Noteplan. Make sure to grant those persmissions. 
 - Adjust delay values in the script if it is not performing as expected under different system loads.
 
-### Update
-I just realized that I had the [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) enabled while I developed this script. The default title template was set to `{{basename}}~~{{vault}} - Obsidian v{{version}}`. I am not sure to what extent this conditioned the script, i.e. I don't know what the Obsidian Window Title looks like without the plugin (e.g. the filtering of the vault name may not be necessary without the plugin. Since that plugin was created to get the note title into the windows title in the first place, it would seem likely that the script wont work at all without the plugin. This doesn't seem to be the case, however, so maybe the note title has been added to the windows title in Obsidian core? - I wont explore this any further as long as the script works for me.
+## An Alternative Approach
+I think the chosen approach of getting the note URL in the respective app is the most robust way of making sure that we open the correct note in the other app. But here is an alternative way of getting the note URL in Obsidian: you can configure the [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) so that the default title template includes not just the note's name but also the path and then retrieve that information from the Obsidian Window (Noteplan needs the entire path to reliably find all notes). The disadvantages of this strategy are, however:
 
-Regardless of the above, note that the Plugin also can read the title tag in the YAML header and use that in the window title. This might add some robustness to the script, given that NotePlan uses this title for naming notes.
+- We need a plugin in Obsidian.
+- We need to check whether Obsidian is in Full Screen Mode and exit it because there seem to be issues with retrieving the window title when in Full Screen mode.
+- We need to encode the note path when construcing the URL. When we extract the path from the URL, it os already encoded. 
 
 ## Contributing
 
