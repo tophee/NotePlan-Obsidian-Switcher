@@ -49,8 +49,14 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 ## Customization
 
 - **Vault Name:**
-  - The script uses a hardcoded vault name `co.noteplan.NotePlan-setapp`. You can customize this by changing the `vault` variable in the script to match your vault name.
-  - The script assumes that Hyper + U is the Hotkey in Obsidian for copying the note URL. If you have a different Hotkey, change the script accordingly.
+The script uses a hardcoded vault name `co.noteplan.NotePlan-setapp`. You can customize this by changing the `vault` variable in the script to match your vault name.
+- **Obsidian Hotkey:**
+The script assumes that Hyper + U is the Hotkey in Obsidian for copying the note URL. If you have a different Hotkey, change the script accordingly.
+- **An Alternative Approach:**
+I think the chosen approach of getting the note URL in the respective app is the most robust way of making sure that we open the correct note in the other app. But here is an alternative way of getting the note URL in Obsidian: you can configure the [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) so that the default title template includes not just the note's name but also the path and then retrieve that information from the Obsidian Window (Noteplan needs the entire path to reliably find all notes). The disadvantages of this strategy are, however:
+  - We need a plugin in Obsidian.
+  - We need to check whether Obsidian is in Full Screen Mode and exit it because there seem to be issues with retrieving the window title when in Full Screen mode.
+  - We need to encode the note path when construcing the URL. When we extract the path from the URL, it os already encoded. 
 
 ## Troubleshooting
 
@@ -58,12 +64,7 @@ There are many ways to trigger the script. Here is one example using BetterTouch
 - When you run the script for the first time, BTT will ask for permission to control Obsidian and Noteplan. Make sure to grant those persmissions. 
 - Adjust delay values in the script if it is not performing as expected under different system loads.
 
-## An Alternative Approach
-I think the chosen approach of getting the note URL in the respective app is the most robust way of making sure that we open the correct note in the other app. But here is an alternative way of getting the note URL in Obsidian: you can configure the [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) so that the default title template includes not just the note's name but also the path and then retrieve that information from the Obsidian Window (Noteplan needs the entire path to reliably find all notes). The disadvantages of this strategy are, however:
 
-- We need a plugin in Obsidian.
-- We need to check whether Obsidian is in Full Screen Mode and exit it because there seem to be issues with retrieving the window title when in Full Screen mode.
-- We need to encode the note path when construcing the URL. When we extract the path from the URL, it os already encoded. 
 
 ## Contributing
 
