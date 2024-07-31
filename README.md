@@ -56,11 +56,14 @@ The script assumes that Hyper + U is the Hotkey in Obsidian for copying the note
 I think the chosen approach of getting the note URL in the respective app is the most robust way of making sure that we open the correct note in the other app. But here is an alternative way of getting the note URL in Obsidian: you can configure the [Obsidian Windows Title Changer plugin](https://github.com/jplattel/open-note-to-window-title) so that the default title template includes not just the note's name but also the path and then retrieve that information from the Obsidian Window (Noteplan needs the entire path to reliably find all notes). The disadvantages of this strategy are, however:
   - We need a plugin in Obsidian.
   - We need to check whether Obsidian is in Full Screen Mode and exit it because there seem to be issues with retrieving the window title when in Full Screen mode.
-  - We need to encode the note path when construcing the URL. When we extract the path from the URL, it os already encoded. 
+  - We need to encode the note path when construcing the URL. When we extract the path from the URL, it os already encoded.
+- **Another Alternative Approach:**
+  - It might be easier for some users to just install and enable a plugin in Obsidian (which opens the note in Noteplan) and a plugin in Noteplan (which opens the note in Obsidian). But I have no experience with writing a plugin from scratch for either app, so it was easier for me to use Apple script. I also feel it is easier to maintain one script rather than two plugins. But to popularize the Switcher, two plugins would clearly be the better option. (There are probably other criteria to decide which is the better approach to implementing this functionality at the OS level versus at the App level, but I'm not sure about these. What do you think?) 
 
 ## Troubleshooting
 
-- Ensure that the path to your Obsidian Vault and your Noteplan folder are identical and that the vault name is set correctly in the script. 
+- Ensure that the path to your Obsidian Vault and your Noteplan folder are identical and that the vault name is set correctly in the script.
+- Ensure that your Obsidian Shortcut for "Copy Obsidian URL" is the same as the one called in the script (default: Hyper + U)
 - When you run the script for the first time, BTT will ask for permission to control Obsidian and Noteplan. Make sure to grant those persmissions. 
 - Adjust delay values in the script if it is not performing as expected under different system loads.
 
